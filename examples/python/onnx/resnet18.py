@@ -63,8 +63,6 @@ def top_level_task():
   perf_metrics = ffmodel.get_perf_metrics()
   accuracy = perf_metrics.get_accuracy()
   print('Accuracy: %f' % accuracy)
-  # if accuracy < ModelAccuracy.CIFAR10_ALEXNET.value:
-  #   assert 0, 'Check Accuracy'
 
 if __name__ == "__main__":
   print("resnet onnx")

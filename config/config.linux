@@ -4,40 +4,36 @@ echo " Defaults for Linux machine"
 
 # set the CC and CXX, usually it is not needed as cmake can detect it
 # set CC and CXX to mpicc and mpic++ when enable gasnet
-# CC=mpicc
-# CXX=mpic++
+CC=gcc
+CXX=g++
 
 # add flags if needed
-#CC_FLAGS=${CC_FLAGS+=""}
-#NVCC_FLAGS=${NVCC_FLAGS+=""}
-#LD_FLAGS=${LD_FLAGS+=""}
-
-#set install dir
-#INSTALL_DIR=
+CMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS+="-std=c++11"}
 
 # set build type
 BUILD_TYPE=Release
 
 # set CUDA Arch, replace xx with your GPU architecture
-#FF_CUDA_ARCH=xx
+FF_CUDA_ARCH=61
 
 # set CUDNN dir in case cmake cannot autodetect a path
-CUDNN_DIR=/usr/local/cuda
+CUDNN_DIR="/opt/apps/cuda10_0/cudnn/7.6.2"
 
 # set CUDA dir in case cmake cannot autodetect a path
-#CUDA_DIR=/usr/local/cuda
+CUDA_DIR="/opt/apps/cuda/10.0"
+CUDA_CUDA_LIBRARY="/opt/apps/cuda/10.0/lib64/stubs/libcuda.so"
 
 # enable Python
 FF_USE_PYTHON=ON
+
+# enable PyBind11
+FF_USE_PYBIND=OFF
 
 # enable NCCL
 FF_USE_NCCL=OFF
 
 # enable GASNet
 FF_USE_GASNET=OFF
-
-# select GASNET conduit
-FF_GASNET_CONDUIT=ibv
 
 # build C++ examples
 FF_BUILD_ALL_EXAMPLES=OFF

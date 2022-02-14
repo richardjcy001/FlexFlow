@@ -17,11 +17,11 @@ BUILD_TYPE=Release
 FF_CUDA_ARCH=61
 
 # set CUDNN dir in case cmake cannot autodetect a path
-CUDNN_DIR="/opt/apps/cuda10_0/cudnn/7.6.2"
+CUDNN_DIR="/opt/apps/cuda11_0/cudnn/8.0.5"
 
 # set CUDA dir in case cmake cannot autodetect a path
-CUDA_DIR="/opt/apps/cuda/10.0"
-CUDA_CUDA_LIBRARY="/opt/apps/cuda/10.0/lib64/stubs/libcuda.so"
+CUDA_DIR="/opt/apps/cuda/11.0"
+CUDA_CUDA_LIBRARY="/opt/apps/cuda/11.0/lib64/stubs/libcuda.so"
 
 # enable Python
 FF_USE_PYTHON=ON

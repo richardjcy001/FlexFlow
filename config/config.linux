@@ -14,7 +14,8 @@ CMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS+="-std=c++11"}
 BUILD_TYPE=Release
 
 # set CUDA Arch, replace xx with your GPU architecture
-FF_CUDA_ARCH=61
+# FF_CUDA_ARCH=60 # p100
+FF_CUDA_ARCH=61 # gtx
 
 # set CUDNN dir in case cmake cannot autodetect a path
 CUDNN_DIR="/opt/apps/cuda11_0/cudnn/8.0.5"

@@ -1073,3 +1073,19 @@ bool Conv2D::measure_operator_cost(Simulator* sim,
          cost_metrics.forward_time, cost_metrics.backward_time);
   return true;
 }
+
+Conv2DMeta::~Conv2DMeta(void)
+{
+  checkCUDNN(cudnnDestroyTensorDescriptor(inputTensor));
+  checkCUDNN(cudnnDestroyTensorDescriptor(outputTensor));
+  if (relu)
+  {
+    checkCUDNN(cudnnDestroyActivationDescriptor(actiDesc));
+  }
+  if (use_bias)
+  {
+    checkCUDNN(cudnnDestroyTensorDescriptor(biasTensor));
+  }
+  checkCUDNN(cudnnDestroyFilterDescriptor(filterDesc));
+  checkCUDNN(cudnnDestroyConvolutionDescriptor(convDesc));
+}

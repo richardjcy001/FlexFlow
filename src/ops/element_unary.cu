@@ -826,3 +826,10 @@ bool ElementUnary::measure_operator_cost(Simulator* sim,
   }
   return true;
 }
+
+ElementUnaryMeta::~ElementUnaryMeta(void)
+{
+  checkCUDNN(cudnnDestroyTensorDescriptor(inputTensor));
+  checkCUDNN(cudnnDestroyTensorDescriptor(outputTensor));
+  checkCUDNN(cudnnDestroyActivationDescriptor(actiDesc));
+}

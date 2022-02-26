@@ -503,3 +503,14 @@ bool Pool2D::measure_operator_cost(Simulator* sim,
 
   return true;
 }
+
+Pool2DMeta::~Pool2DMeta(void)
+{
+  checkCUDNN(cudnnDestroyTensorDescriptor(inputTensor));
+  checkCUDNN(cudnnDestroyTensorDescriptor(outputTensor));
+  if (relu)
+  {
+    checkCUDNN(cudnnDestroyActivationDescriptor(actiDesc));
+  }
+  checkCUDNN(cudnnDestroyPoolingDescriptor(poolDesc));
+}

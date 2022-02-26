@@ -623,6 +623,7 @@ private:
 class ElementBinaryMeta : public OpMeta {
 public:
   ElementBinaryMeta(FFHandler handle);
+  ~ElementBinaryMeta(void);
   cudnnTensorDescriptor_t input1Tensor, input2Tensor, outputTensor;
   cudnnOpTensorDescriptor_t opDesc;
   cudnnReduceTensorDescriptor_t reduceAddDesc;
@@ -684,6 +685,7 @@ public:
 class ElementUnaryMeta : public OpMeta {
 public:
   ElementUnaryMeta(FFHandler handle);
+  ~ElementUnaryMeta(void);
   cudnnTensorDescriptor_t inputTensor, outputTensor;
   cudnnActivationDescriptor_t actiDesc;
   OperatorType op_type;
@@ -762,6 +764,7 @@ public:
 class Conv2DMeta : public OpMeta {
 public:
   Conv2DMeta(FFHandler handler);
+  ~Conv2DMeta(void);
   cudnnTensorDescriptor_t inputTensor, biasTensor, outputTensor;
   cudnnFilterDescriptor_t filterDesc;
   cudnnActivationDescriptor_t actiDesc;
@@ -942,6 +945,7 @@ public:
 class Pool2DMeta : public OpMeta {
 public:
   Pool2DMeta(FFHandler handle);
+  ~Pool2DMeta(void);
   cudnnTensorDescriptor_t inputTensor, outputTensor;
   cudnnActivationDescriptor_t actiDesc;
   cudnnPoolingDescriptor_t poolDesc;

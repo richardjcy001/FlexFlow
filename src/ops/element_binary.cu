@@ -683,11 +683,19 @@ void ElementBinary::backward_kernel(const ElementBinaryMeta* m,
     float alpha = 1.0f, beta = 1.0f;
     if (in1_grad_ptr != nullptr) {
       if (m->broadcast_input1) {
-        checkCUDNN(cudnnReduceTensor(m->handle.dnn, m->reduceAddDesc,
-            nullptr/*indices*/, 0/*indicesSizeInBytes*/,
-            m->handle.workSpace, m->handle.workSpaceSize,
-            &alpha, m->outputTensor, out_grad_ptr,
-            &beta, m->input1Tensor, in1_grad_ptr));
+        // Log current memory usage info
+        // Begin
+        size_t free, total;
+        cudaMemGetInfo(&free, &total);
+        std::cout << "broadcast_input1 memory: free=" << free << ", total=" << total << std::endl;
+        // End
+        std::cout << "m->handle.workSpace:" << m->handle.workSpace << " m->handle.workSpaceSize:" << m->handle.workSpaceSize << std::endl;
+
+        // checkCUDNN(cudnnReduceTensor(m->handle.dnn, m->reduceAddDesc,
+        //     nullptr/*indices*/, 0/*indicesSizeInBytes*/,
+        //     m->handle.workSpace, m->handle.workSpaceSize,
+        //     &alpha, m->outputTensor, out_grad_ptr,
+        //     &beta, m->input1Tensor, in1_grad_ptr));
       } else {
         checkCUDNN(cudnnAddTensor(m->handle.dnn,
             &alpha, m->outputTensor, out_grad_ptr,
@@ -698,11 +706,20 @@ void ElementBinary::backward_kernel(const ElementBinaryMeta* m,
       alpha = -1.0f;
     if (in2_grad_ptr != nullptr) {
       if (m->broadcast_input2) {
-        checkCUDNN(cudnnReduceTensor(m->handle.dnn, m->reduceAddDesc,
-            nullptr/*indices*/, 0/*indicesSizeInBytes*/,
-            m->handle.workSpace, m->handle.workSpaceSize,
-            &alpha, m->outputTensor, out_grad_ptr,
-            &beta, m->input2Tensor, in2_grad_ptr));
+        // Log current memory usage info
+        // Begin
+        size_t free, total;
+        cudaMemGetInfo(&free, &total);
+        std::cout << "broadcast_input2 memory: free=" << free << ", total=" << total << std::endl;
+        // End
+
+        std::cout << "m->handle.workSpace:" << m->handle.workSpace << " m->handle.workSpaceSize:" << m->handle.workSpaceSize << std::endl;
+
+        // checkCUDNN(cudnnReduceTensor(m->handle.dnn, m->reduceAddDesc,
+        //     nullptr/*indices*/, 0/*indicesSizeInBytes*/,
+        //     m->handle.workSpace, m->handle.workSpaceSize,
+        //     &alpha, m->outputTensor, out_grad_ptr,
+        //     &beta, m->input2Tensor, in2_grad_ptr));
       } else {
         checkCUDNN(cudnnAddTensor(m->handle.dnn,
             &alpha, m->outputTensor, out_grad_ptr,
@@ -1040,4 +1057,13 @@ bool ElementBinary::measure_operator_cost(Simulator* sim,
   }
 
   return true;
+}
+
+ElementBinaryMeta::~ElementBinaryMeta(void)
+{
+  checkCUDNN(cudnnDestroyTensorDescriptor(input1Tensor));
+  checkCUDNN(cudnnDestroyTensorDescriptor(input2Tensor));
+  checkCUDNN(cudnnDestroyTensorDescriptor(outputTensor));
+  checkCUDNN(cudnnDestroyOpTensorDescriptor(opDesc));
+  checkCUDNN(cudnnDestroyReduceTensorDescriptor(reduceAddDesc));
 }
